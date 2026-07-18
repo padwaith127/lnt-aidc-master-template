@@ -1,23 +1,23 @@
 # Title: IEC Standards for Electrical Equipment & Assemblies
-## Purpose: To define the International Electrotechnical Commission (IEC) standards required for equipment specification and testing in a 40 MW facility.
+## Purpose: To define the International Electrotechnical Commission (IEC) standards required for equipment specification and testing in a {{ cookiecutter.it_capacity_mw }} MW facility.
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #IEC #Switchgear #Transformers #Safety #Testing #LTVyoma
+## Tags: #IEC #Switchgear #Transformers #Safety #Testing #{{ cookiecutter.project_code }}
 ## Related Files: [[BIS.md]], [[LV_Switchgear.md]], [[Transformer_Design.md]], [[Busbar_Distribution.md]]
 ## Standards Covered: IEC 61439, IEC 60076, IEC 62271, IEC 60364, IEC 62040
 
 ---
 
 ## 1. Overview
-While IEEE governs the *analysis* of the system, **IEC (International Electrotechnical Commission)** standards govern the *hardware*. For the L&T Mahape project, all procurement from vendors (ABB, Schneider, Siemens) must be compliant with the latest IEC editions. This ensures the 40 MW facility is built with components that are safe, interoperable, and tested.
+While IEEE governs the *analysis* of the system, **IEC (International Electrotechnical Commission)** standards govern the *hardware*. For the {{ cookiecutter.project_name }} {{ cookiecutter.city }} project, all procurement from vendors must be compliant with the latest IEC editions. This ensures the {{ cookiecutter.it_capacity_mw }} MW facility is built with components that are safe, interoperable, and tested.
 
 ## 2. Core IEC Standards for Data Centre Hardware
 
 ### 2.1 LV Switchgear: IEC 61439-1 & 2
 *   **Significance:** Replaced the old IEC 60439. It defines the "Assembly" rather than just the components.
 *   **Requirement:** All PCCs and MCCs must be **Type Tested** (TTA) as a complete assembly.
-*   **Mahape Application:** Specify **Form 4b** separation as per Part 2 of this standard.
+*   **Application:** Specify **Form 4b** separation as per Part 2 of this standard.
 
 ### 2.2 HT Switchgear: IEC 62271 Series
 *   **Significance:** Governing High-Voltage (HT) switchgear and controlgear.
@@ -34,16 +34,16 @@ While IEEE governs the *analysis* of the system, **IEC (International Electrotec
 
 ### 2.5 UPS Systems: IEC 62040-3
 *   **Significance:** Defines the method of specifying the performance and test requirements of UPS units.
-*   **Classification:** For Mahape, specify **VFI-SS-111** (Voltage and Frequency Independent, Sinusoidal output).
+*   **Classification:** For {{ cookiecutter.city }}, specify **VFI-SS-111** (Voltage and Frequency Independent, Sinusoidal output).
 
 ## 3. Mandatory Testing (IEC Requirements)
-As an L&T PM, you must witness "Routine Tests" based on these IEC standards:
+As a PM, you must witness "Routine Tests" based on these IEC standards:
 1.  **Dielectric Tests:** To check insulation integrity.
 2.  **Temperature Rise Tests:** To ensure the 4000A busbar doesn't overheat.
-3.  **Short-time Withstand:** To prove the busbar supports can handle the 65kA mechanical kick.
+3.  **Short-time Withstand:** To prove the busbar supports can handle the mechanical kick of a fault.
 
-## 4. IEC vs. IS Standards (The Indian Context)
-In many cases, Indian Standards (BIS) have adopted IEC standards (e.g., IS/IEC 62305 for Lightning). Where an IS exists, it must be followed for local statutory compliance; where it doesn't, the IEC is the default global authority for L&T.
+## 4. IEC vs. Local Standards
+In many cases, local standards have adopted IEC standards (e.g., IS/IEC 62305 for Lightning). Where a local statutory standard exists, it must be followed for compliance; where it doesn't, the IEC is the default global authority.
 
 ## 5. Design Checklist (IEC Compliance)
 - [ ] Are all LV panels certified to IEC 61439-1 & 2?
@@ -61,4 +61,4 @@ In many cases, Indian Standards (BIS) have adopted IEC standards (e.g., IS/IEC 6
 * **IEC 60076:** Power transformers.
 
 ### Revision History
-* 1.0: Mapped core IEC standards for L&T Vyoma Mahape project.
+* 1.0: Mapped core IEC standards for {{ cookiecutter.project_name }} {{ cookiecutter.city }} project.
