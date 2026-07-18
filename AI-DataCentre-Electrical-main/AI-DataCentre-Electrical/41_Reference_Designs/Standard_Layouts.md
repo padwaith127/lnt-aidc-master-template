@@ -1,26 +1,26 @@
 # Title: Standard Layouts & Spatial Planning for AI-Ready DCs
-## Purpose: To define the physical architecture, equipment placement logic, and spatial coordination requirements for a 40 MW AI-ready hyperscale facility.
+## Purpose: To define the physical architecture, equipment placement logic, and spatial coordination requirements for a {{ cookiecutter.it_capacity_mw }} MW AI-ready hyperscale facility.
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #DataCentreLayout #SpatialPlanning #SubstationLayout #WhiteSpace #AIRack #LTVyoma #Mahape
-## Related Files: [[HT_Switchgear.md]], [[LV_Switchgear.md]], [[Transformer_Design.md]], [[NVIDIA_Architecture.md]]
+## Tags: #DataCentreLayout #SpatialPlanning #SubstationLayout #WhiteSpace #AIRack #{{ cookiecutter.project_code }} #{{ cookiecutter.city }}
+## Related Files: [[HT_Switchgear.md]], [[LV_Switchgear.md]], [[Transformer_Design.md]], [[GPU_Infrastructure_Requirements.md]]
 ## Standards Covered: TIA-942-B, CEA 2023, NBC 2016, ASHRAE TC 9.9
 
 ---
 
 ## 1. Overview
-Spatial planning in a 40 MW AI facility is a multi-dimensional puzzle. For the L&T Mahape project, the layout must minimize "Electrical Impedance" by keeping high-density AI racks close to their power source, while managing the massive footprint of the mechanical cooling plant. This module defines the "Gold Standard" layouts for each major zone of the facility.
+Spatial planning in a {{ cookiecutter.it_capacity_mw }} MW AI facility is a multi-dimensional puzzle. For the {{ cookiecutter.project_name }} {{ cookiecutter.city }} project, the layout must minimize "Electrical Impedance" by keeping high-density AI racks close to their power source, while managing the massive footprint of the mechanical cooling plant. This module defines the "Gold Standard" layouts for each major zone of the facility.
 
 ## 2. Spatial Logic: The "Power-to-Load" Proximity Rule
-In high-density AI design, long LT (415V) cable or busduct runs are the enemy. They increase voltage drop and $I^2R$ heat losses.
+In high-density AI design, long LT (415V/480V) cable or busduct runs are the enemy. They increase voltage drop and $I^2R$ heat losses.
 *   **The Vertical Strategy:** If the DC is a multi-story building, transformers and UPS systems are placed on the floor directly above or below the Data Hall.
-*   **The Modular Block:** The 40 MW facility is divided into 2.5 MW or 5 MW "Power Blocks." Each block has its own dedicated Transformer, UPS, and Battery room.
+*   **The Modular Block:** The {{ cookiecutter.it_capacity_mw }} MW facility is divided into 2.5 MW or 5 MW "Power Blocks." Each block has its own dedicated Transformer, UPS, and Battery room.
 
 ## 3. Zone 1: HT Yard & Substation (The Utility Entry)
-In Mahape, due to coastal salt air and humidity, **GIS (Gas Insulated Switchgear)** is the standard to prevent flashovers.
+In {{ cookiecutter.city }}, due to local environmental conditions (e.g., humidity, dust, or coastal salt air), **GIS (Gas Insulated Switchgear)** is the standard to prevent flashovers.
 *   **Layout:**
-    *   Utility Gantry (33kV/110kV).
+    *   Utility Gantry ({{ cookiecutter.utility_voltage_kv }}kV).
     *   Primary Power Transformers (Oil-filled, located outdoors).
     *   GIS Room (Indoor, pressurized, air-conditioned).
     *   **Clearance:** Minimum 6-meter road access around the yard for fire tenders and transformer replacement.
@@ -33,7 +33,7 @@ Each 2.5 MW IT block typically follows this layout:
 *   **Battery (BESS) Room:** Strictly controlled to 20°C - 23°C. Lithium-ion cabinets require 900mm spacing between rows per **NFPA 855**.
 
 ## 5. Zone 3: The AI Data Hall (White Space)
-For NVIDIA GB200/Blackwell infrastructure, the layout shifts from "Air-First" to "Liquid-First."
+For {{ cookiecutter.ai_silicon_vendor }} infrastructure, the layout shifts from "Air-First" to "Liquid-First."
 
 | Component | Placement Logic |
 | :--- | :--- |
@@ -50,9 +50,9 @@ For NVIDIA GB200/Blackwell infrastructure, the layout shifts from "Air-First" to
 ## 6. Engineering Criteria: Floor Loading & Clearance
 
 ### 6.1 Weight Management (Structural-Electrical Interface)
-NVIDIA NVL72 racks weigh ~2,500 kg.
+{{ cookiecutter.ai_silicon_vendor }} racks weigh ~2,500 kg.
 *   **Layout Requirement:** If using a raised floor, the pedestals must be on a 600mm x 600mm grid with heavy-duty "Bolted Stringers." 
-*   **Preferred Design:** "Slab-on-Grade" (no raised floor) with overhead distribution is the current hyperscale trend for 40 MW+ sites to handle the extreme floor loading.
+*   **Preferred Design:** "Slab-on-Grade" (no raised floor) with overhead distribution is the current hyperscale trend for {{ cookiecutter.it_capacity_mw }} MW+ sites to handle the extreme floor loading.
 
 ### 6.2 Regulatory Clearances (CEA 2023)
 *   **Main PCCs:** Front clearance of 2000mm is mandatory for 4000A ACB withdrawal.
@@ -61,7 +61,7 @@ NVIDIA NVL72 racks weigh ~2,500 kg.
 ## 7. AI-Ready Design Features
 1.  **Pressure Relief Vents:** In rooms with Gas Suppression (Module 29), the layout must include "Over-pressure Vents" to prevent structural damage during a gas discharge.
 2.  **Drip-Zone Avoidance:** The electrical layout must be "Zoned" such that no water/coolant pipes pass directly over Switchgear or UPS systems.
-3.  **Expansion Gaps:** Leave 15% physical "White Space" for future "Compute Density Upgrades" (e.g., swapping H100s for Blackwells).
+3.  **Expansion Gaps:** Leave 15% physical "White Space" for future "Compute Density Upgrades" (e.g., swapping legacy GPUs for next-gen {{ cookiecutter.ai_silicon_vendor }}).
 
 ## 8. Construction & Coordination (BIM Workflow)
 *   **LOD 400 Modeling:** All layouts must be verified in 3D.
@@ -91,10 +91,10 @@ NVIDIA NVL72 racks weigh ~2,500 kg.
 
 ### Manufacturer Documents
 * **Schneider Electric:** "Optimizing Data Center Layouts for High Density."
-* **Vertiv:** "Standard Reference Designs for 40MW Hyperscale Facilities."
+* **Vertiv:** "Standard Reference Designs for Hyperscale Facilities."
 
 ### Revision History
-* 1.0: Initial Layout Standards for L&T Vyoma Mahape project.
+* 1.0: Initial Layout Standards for {{ cookiecutter.project_name }} {{ cookiecutter.city }} project.
 
 ---
-**Next File Recommendation:** `42_Research_Papers/Annotated_Bibliography.md` (A curated list of the must-read technical papers to master the AI DC domain).
+**Next File Recommendation:** `Annotated_Bibliography.md` (A curated list of the must-read technical papers to master the AI DC domain).
