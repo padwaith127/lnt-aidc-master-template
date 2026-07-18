@@ -1,20 +1,20 @@
 # Title: Preventive & Predictive Maintenance for Critical Power Systems
-## Purpose: To define the technical maintenance lifecycle and condition-monitoring strategies for a 40 MW AI-ready facility to ensure near-zero unplanned downtime.
+## Purpose: To define the technical maintenance lifecycle and condition-monitoring strategies for a {{ cookiecutter.it_capacity_mw }} MW AI-ready facility to ensure near-zero unplanned downtime.
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #Maintenance #PreventiveMaintenance #PredictiveMaintenance #NFPA70B #Thermography #PartialDischarge #LTVyoma
-## Related Files: [[Standard_Operating_Procedures.md]], [[Failure_Analysis.md]], [[UPS_System_Design.md]], [[Transformer_Design.md]]
+## Tags: #Maintenance #PreventiveMaintenance #PredictiveMaintenance #NFPA70B #Thermography #PartialDischarge #{{ cookiecutter.project_code }}
+## Related Files: [[Standard_Operating_Procedures.md]], [[Root_Cause_Methodology.md]], [[UPS_System_Design.md]], [[Transformer_Design.md]]
 ## Standards Covered: NFPA 70B (2023), IEEE 3007.2, IS 10028, NETA ATS/MTS, ISO 55001
 
 ---
 
 ## 1. Overview
-In a 40 MW facility like Mahape, the cost of an outage is measured in millions of dollars per hour. Traditional "Run-to-Failure" or even simple "Time-Based" maintenance is inadequate. For the L&T Vyoma project, we implement an **NFPA 70B-compliant** maintenance program that balances **Preventive Maintenance (PM)** with **Predictive Maintenance (PdM)** using real-time data from the SCADA/EPMS.
+In a {{ cookiecutter.it_capacity_mw }} MW facility like {{ cookiecutter.city }}, the cost of an outage is measured in millions of dollars per hour. Traditional "Run-to-Failure" or even simple "Time-Based" maintenance is inadequate. For the {{ cookiecutter.project_name }} project, we implement an **NFPA 70B-compliant** maintenance program that balances **Preventive Maintenance (PM)** with **Predictive Maintenance (PdM)** using real-time data from the SCADA/EPMS.
 
 ## 2. Maintenance Strategies
 
-| Strategy | Methodology | Application in 40MW DC |
+| Strategy | Methodology | Application in {{ cookiecutter.it_capacity_mw }}MW DC |
 | :--- | :--- | :--- |
 | **Preventive (PM)** | Scheduled, time-based tasks (e.g., Annual, Quarterly). | Filter changes, physical cleaning, bolt tightening. |
 | **Predictive (PdM)** | Condition-based monitoring using sensors. | Oil analysis, Partial Discharge (PD), IR thermography. |
@@ -29,8 +29,8 @@ In a 40 MW facility like Mahape, the cost of an outage is measured in millions o
 
 ### 3.2 HT & LT Switchgear
 *   **Annual:** Contact Resistance (Ductor) test; Vacuum integrity check for VCBs.
-*   **PdM:** **Online Partial Discharge (PD) Monitoring** (especially for Mahape's humid coastal environment) to detect insulation tracking before a flashover.
-*   **Cleaning:** Use specialized non-conductive vacuums to remove industrial dust (common in Mahape MIDC).
+*   **PdM:** **Online Partial Discharge (PD) Monitoring** (especially for {{ cookiecutter.city }}'s humid environment) to detect insulation tracking before a flashover.
+*   **Cleaning:** Use specialized non-conductive vacuums to remove industrial dust (common in {{ cookiecutter.city }} industrial zones).
 
 ### 3.3 UPS & Battery Systems (BESS)
 *   **Monthly:** Visual check of Lithium-ion cabinets; BMS alarm log review.
@@ -40,7 +40,7 @@ In a 40 MW facility like Mahape, the cost of an outage is measured in millions o
 ### 3.4 Diesel Generators (DGs)
 *   **Weekly:** No-load test run (5-10 mins).
 *   **Monthly:** Load bank test at 30% load (minimum) to prevent "Wet Stacking."
-*   **Annual:** Full "Black Start" test and fuel polishing to remove Mumbai moisture/sediment.
+*   **Annual:** Full "Black Start" test and fuel polishing to remove {{ cookiecutter.city }} moisture/sediment.
 
 ## 4. Engineering Calculations: Reliability & MTBF
 
@@ -69,15 +69,15 @@ To justify the maintenance budget, we calculate the **Mean Time Between Failures
 *   **Lock-Out Tag-Out (LOTO):** Verify the "Dead" condition using a Proximity Voltage Detector before touching any terminal.
 
 ## 7. Spares Management (The "Critical Spares" List)
-For the 40 MW Mahape site, L&T must stock:
-1.  **ACBs/VCBs:** 1 spare of each frame size (3200A, 4000A).
+For the {{ cookiecutter.it_capacity_mw }} MW {{ cookiecutter.city }} site, stock must include:
+1.  **ACBs/VCBs:** 1 spare of each frame size.
 2.  **Protection Relays:** Pre-configured with the project settings.
 3.  **UPS Power Modules:** 5% of total module count.
 4.  **Fuses & Lugs:** Comprehensive assortment of high-speed semiconductor fuses.
 5.  **Liquid Cooling Spares:** CDU pump seals and control boards.
 
 ## 8. Commissioning to Maintenance Handover
-The transition from L&T Construction to L&T Operations must include:
+The transition from Construction to Operations must include:
 *   The **"Golden SLD"**: Final As-Built drawing.
 *   **Baseline Data:** All IR/Vibration/PD readings taken during Level 5 Commissioning to serve as the "Normal" reference.
 
@@ -105,10 +105,10 @@ The transition from L&T Construction to L&T Operations must include:
 ### Manufacturer Documents
 * **Cummins:** "Generator Set Preventive Maintenance Guide."
 * **Schneider Electric:** "Maintenance Strategies for Data Centers White Paper."
-* **NVIDIA:** "Best Practices for Maintaining Liquid Cooled GPU Infrastructure."
+* **Vendor Specs:** "Best Practices for Maintaining Liquid Cooled GPU Infrastructure."
 
 ### Revision History
-* 1.0: Initial Maintenance Framework for L&T Vyoma Mahape project.
+* 1.0: Initial Maintenance Framework for {{ cookiecutter.project_name }} {{ cookiecutter.city }} project.
 
 ---
-**Next File Recommendation:** `34_Failure_Analysis/Root_Cause_Methodology.md` (Defining how to investigate an outage using forensic engineering).
+**Next File Recommendation:** `Root_Cause_Methodology.md` (Defining how to investigate an outage using forensic engineering).
