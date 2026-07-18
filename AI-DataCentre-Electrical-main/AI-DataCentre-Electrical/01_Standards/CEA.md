@@ -4,13 +4,13 @@
 ## Date: 24-May-2024
 ## Version: 1.0
 ## Tags: #CEA #StatutoryCompliance #CEIG #IndiaRegulations #ElectricalSafety
-## Related Files: [[BIS.md]], [[Substation_Design.md]], [[Earthing.md]]
+## Related Files: [[BIS.md]], [[Substation_Design_Criteria.md]], [[Grounding_Grid_Design.md]]
 ## Standards Covered: CEA (Measures relating to Safety and Electric Supply) Regulations, 2023.
 
 ---
 
 ## 1. Overview
-In the Indian context, specifically for the L&T Mahape 40 MW project, the **Central Electricity Authority (CEA)** regulations are the law of the land. While IEEE and IEC provide engineering excellence, the CEA provides the legal mandate. No data centre in India can be energized without an inspection and "Permission to Charge" from the **Chief Electrical Inspector to the Government (CEIG)**, based on these regulations.
+In the Indian context, specifically for the {{ cookiecutter.project_name }} {{ cookiecutter.city }} {{ cookiecutter.it_capacity_mw }} MW project, the **Central Electricity Authority (CEA)** regulations are the law of the land. While IEEE and IEC provide engineering excellence, the CEA provides the legal mandate. No data centre in India can be energized without an inspection and "Permission to Charge" from the **Chief Electrical Inspector to the Government (CEIG)**, based on these regulations.
 
 The latest edition is the **CEA (Measures relating to Safety and Electric Supply) Regulations, 2023**, which superseded the 2010 version.
 
@@ -18,7 +18,7 @@ The latest edition is the **CEA (Measures relating to Safety and Electric Supply
 
 ### 2.1 Regulation 32: Identification of Earthed and earthed neutral conductors
 *   **Significance:** Mandatory color coding and marking of neutral and earth conductors at the point of commencement of supply.
-*   **Application:** For your 40 MW site, the 33kV/11kV incoming gantry must have clear identification that complies with these safety markings.
+*   **Application:** For your {{ cookiecutter.it_capacity_mw }} MW site, the {{ cookiecutter.utility_voltage_kv }}kV incoming gantry must have clear identification that complies with these safety markings.
 
 ### 2.2 Regulation 37: Conditions applicable to High Voltage (HV) and Extra High Voltage (EHV) Installations
 *   **Significance:** This is the core regulation for your HT Yard and Transformers.
@@ -28,10 +28,10 @@ The latest edition is the **CEA (Measures relating to Safety and Electric Supply
     *   Clearance distances (Phase-to-Phase and Phase-to-Earth) must be maintained as per Schedule-VI.
 
 ### 2.3 Regulation 43: Protective Equipment
-*   **Significance:** Every HT feeder in your Mahape DC must have protection against:
+*   **Significance:** Every HT feeder in your {{ cookiecutter.city }} DC must have protection against:
     1. Overcurrent
     2. Earth Fault
-    3. Differential Protection (for transformers > 10 MVA, which applies to your 40 MW load).
+    3. Differential Protection (for transformers > 10 MVA, which applies to your {{ cookiecutter.it_capacity_mw }} MW load).
 *   **Mentoring Tip:** The CEIG will check the **Relay Test Reports** against the approved protection settings before commissioning.
 
 ### 2.4 Regulation 48: Precautions against Fire (Transformer Safety)
@@ -41,18 +41,18 @@ The latest edition is the **CEA (Measures relating to Safety and Electric Supply
     *   Mandatory provision of **Nitrogen Injection Fire Protection System (NIFPS)** or emulsifier systems for large power transformers.
 
 ## 3. Earthing Requirements (Regulation 41)
-CEA is extremely strict regarding earthing. For a 40 MW site:
+CEA is extremely strict regarding earthing. For a {{ cookiecutter.it_capacity_mw }} MW site:
 1.  **Neutral Grounding:** The neutral of every transformer and generator must be earthed by at least two separate and distinct connections to a common earth grid.
 2.  **Earth Resistance:** Though the regulation says "low enough to permit the setting of protective devices," the standard industry practice for CEIG approval is **< 1.0 Ohm**.
 
 ## 4. CEA Clearance Requirements (Quick Reference)
-For the 33kV HT Yard at Mahape:
+For the {{ cookiecutter.utility_voltage_kv }}kV HT Yard at {{ cookiecutter.city }}:
 *   **Ground Clearance:** 3.7 meters (minimum height of lowest conductor).
 *   **Sectional Clearance:** 2.8 meters.
 *   **Boundary Wall:** Minimum height of 1.8 meters with barbed wire fencing.
 
 ## 5. The CEIG Approval Process
-As an L&T Engineer, you will manage this workflow:
+As an Engineer, you will manage this workflow:
 1.  **Drawing Approval:** Submit SLD, Layouts, and Earthing designs to the CEIG office *before* construction starts.
 2.  **Compliance Audit:** During construction, ensure all equipment has "Type Test Reports."
 3.  **Site Inspection:** The Inspector visits, checks clearances, measures earth pits, and witnesses the relay testing.
@@ -75,7 +75,4 @@ As an L&T Engineer, you will manage this workflow:
 * **CBIP Manual (Publication 311):** Manual on Design of Substations.
 
 ### Revision History
-* 1.0: Mapped CEA 2023 requirements for 40 MW Data Centre compliance.
-
----
-**Next File Recommendation:** `02_Load_Calculation/AI_Load_Estimation.md`
+* 1.0: Mapped CEA 2023 requirements for {{ cookiecutter.it_capacity_mw }} MW Data Centre compliance.
