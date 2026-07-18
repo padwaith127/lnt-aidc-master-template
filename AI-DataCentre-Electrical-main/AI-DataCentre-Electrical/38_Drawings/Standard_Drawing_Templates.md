@@ -1,16 +1,16 @@
 # Title: Standard Engineering Drawing Templates & Documentation
-## Purpose: To define the technical requirements, symbology, and structure for the electrical drawing package of a 40 MW AI-ready facility.
+## Purpose: To define the technical requirements, symbology, and structure for the electrical drawing package of a {{ cookiecutter.it_capacity_mw }} MW AI-ready facility.
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #EngineeringDrawings #SLD #BIM #AutoCAD #Revit #LOD400 #LTVyoma
-## Related Files: [[HT_Switchgear.md]], [[LV_Switchgear.md]], [[Cable_Design.md]], [[Earthing_Grid_Design.md]]
+## Tags: #EngineeringDrawings #SLD #BIM #AutoCAD #Revit #LOD400 #{{ cookiecutter.project_code }}
+## Related Files: [[HT_Switchgear.md]], [[LV_Switchgear.md]], [[Sizing_and_Routing.md]], [[Grounding_Grid_Design.md]]
 ## Standards Covered: IEC 60617, ISO 13567, IEEE 315, ANSI Y32.2, CEA 2023, NBC 2016
 
 ---
 
 ## 1. Overview
-In a 40 MW hyperscale project, drawings are the primary contract between the design office and the construction site. For the L&T Mahape project, a standard 2D drawing approach is insufficient. We utilize a **BIM (Building Information Modeling)** workflow at **LOD 400 (Level of Development)** to ensure that electrical busducts, HT cables, and massive liquid cooling pipes do not clash.
+In a {{ cookiecutter.it_capacity_mw }} MW hyperscale project, drawings are the primary contract between the design office and the construction site. For the {{ cookiecutter.project_name }} {{ cookiecutter.city }} project, a standard 2D drawing approach is insufficient. We utilize a **BIM (Building Information Modeling)** workflow at **LOD 400 (Level of Development)** to ensure that electrical busducts, HT cables, and massive liquid cooling pipes do not clash.
 
 ## 2. The Drawing Hierarchy (The "Package")
 
@@ -39,16 +39,16 @@ Drawings must reflect the mandatory clearances per **CEA 2023** and **NEC**.
 
 ### 4.2 Cable Tray Separation
 *   **HT to LT:** 300mm vertical separation.
-*   **Power to Data:** 600mm separation (Mandatory for AI GPU InfiniBand integrity).
+*   **Power to Data:** 600mm separation (Mandatory for AI GPU interconnect integrity).
 
 ## 5. BIM & 3D Coordination (LOD 400)
-For the 40 MW Mahape site, all GFC drawings are derived from a **Revit 3D Model**.
+For the {{ cookiecutter.it_capacity_mw }} MW {{ cookiecutter.city }} site, all GFC drawings are derived from a **Revit 3D Model**.
 1.  **Clash Detection:** Weekly Navisworks runs to identify "Hard Clashes" (e.g., Busduct hitting a Chilled Water Pipe).
 2.  **Clearance Zones:** 3D "No-Fly Zones" modeled around breakers and valves to ensure maintenance accessibility.
 3.  **Point Cloud Scanning:** After the civil shell is ready, the site is scanned to verify that the "As-Built" concrete matches the "As-Designed" electrical model.
 
 ## 6. AI-Ready Drawing Specifics
-1.  **Busway Tap-off Schedules:** A dedicated drawing showing the exact X-Y coordinates of every 250A tap-off for the NVIDIA racks.
+1.  **Busway Tap-off Schedules:** A dedicated drawing showing the exact X-Y coordinates of every 250A/400A tap-off for the {{ cookiecutter.ai_silicon_vendor }} racks.
 2.  **Liquid Cooling Interface:** Combined MEP drawings showing the **CDU Electrical Feed** in proximity to the **Fluid Manifolds**.
 3.  **Grounding Grid Detail:** Detailed drawing of the **Signal Reference Grid (SRG)** under the AI racks, including bonding details to the pedestal.
 
@@ -56,12 +56,12 @@ For the 40 MW Mahape site, all GFC drawings are derived from a **Revit 3D Model*
 1.  **Drafting:** Engineer creates the mark-up; Draftsman generates the CAD/Revit file.
 2.  **Internal Review:** Senior Design Consultant checks for technical accuracy and compliance with the **DBR**.
 3.  **Inter-disciplinary Coordination (IDC):** Electrical, Mechanical, and Civil teams sign off on the layout.
-4.  **Issue for Approval:** Sent to the Client (NVIDIA/Equinix) and Regulatory Body (CEIG).
+4.  **Issue for Approval:** Sent to the Client and Regulatory Body (CEIG).
 5.  **Issue for Construction (IFC/GFC):** Stamped and released to the site.
 
 ## 8. Maintenance & As-Builts
-*   **Red-Line Markups:** Every change made on-site at Mahape must be recorded on a paper copy in **Red Pen**.
-*   **Final As-Built:** The BIM model is updated to reflect the site changes, providing the O&M team with a "Digital Twin" of the 40 MW plant.
+*   **Red-Line Markups:** Every change made on-site at {{ cookiecutter.city }} must be recorded on a paper copy in **Red Pen**.
+*   **Final As-Built:** The BIM model is updated to reflect the site changes, providing the O&M team with a "Digital Twin" of the {{ cookiecutter.it_capacity_mw }} MW plant.
 
 ## 9. Common Mistakes in Drawings
 *   **Missing Scale:** Drawings issued without a scale or "NTS" (Not to Scale) without dimensions.
@@ -92,7 +92,7 @@ For the 40 MW Mahape site, all GFC drawings are derived from a **Revit 3D Model*
 * **AutoCAD Electrical:** For 2D Schematics and SLDs.
 
 ### Revision History
-* 1.0: Initial Drawing Standards for L&T Vyoma Mahape project.
+* 1.0: Initial Drawing Standards for {{ cookiecutter.project_name }} {{ cookiecutter.city }} project.
 
 ---
-**Next File Recommendation:** `39_BOQ/Bill_of_Quantities_Preparation.md` (Focusing on the estimation, procurement specifications, and quantification of the 40 MW facility).
+**Next File Recommendation:** `Bill_of_Quantities_Preparation.md` (Focusing on the estimation, procurement specifications, and quantification of the {{ cookiecutter.it_capacity_mw }} MW facility).
