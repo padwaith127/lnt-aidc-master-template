@@ -1,16 +1,16 @@
 # Title: HVAC Electrical Integration & Motor Control
-## Purpose: To define the engineering requirements for the electrical distribution, protection, and control of the 15 MW+ mechanical cooling plant supporting the AI IT load.
+## Purpose: To define the engineering requirements for the electrical distribution, protection, and control of the mechanical cooling plant supporting the AI IT load.
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #HVAC #MotorControl #VFD #ChillerPower #LiquidCooling #PumpPower #LTVyoma
-## Related Files: [[AI_Load_Estimation.md]], [[LV_Switchgear.md]], [[BMS_Integration.md]], [[Harmonics.md]]
+## Tags: #HVAC #MotorControl #VFD #ChillerPower #LiquidCooling #PumpPower #{{ cookiecutter.project_code }}
+## Related Files: [[AI_Load_Estimation.md]], [[LV_Switchgear.md]], [[Building_Management_Integration.md]], [[Mitigation_Strategies.md]]
 ## Standards Covered: IEC 60947-4-1, IEEE 519, IS 12615, IS/IEC 60034, NEMA MG1
 
 ---
 
 ## 1. Overview
-In the L&T Mahape 40 MW AI facility, the mechanical cooling system represents approximately 30-35% of the total facility power (~12 MW to 15 MW). Unlike traditional buildings, cooling in an AI DC is "Mission Critical." If power to the pumps or CDUs (Coolant Distribution Units) fails, NVIDIA GPUs will throttle or thermal-trip within seconds. This module covers the electrical infrastructure required to drive Chillers, Pumps, Cooling Towers, and AI-specific Liquid Cooling components.
+In the {{ cookiecutter.project_name }} {{ cookiecutter.city }} {{ cookiecutter.it_capacity_mw }} MW AI facility, the mechanical cooling system represents approximately 30-35% of the total facility power. Unlike traditional buildings, cooling in an AI DC is "Mission Critical." If power to the pumps or CDUs (Coolant Distribution Units) fails, {{ cookiecutter.ai_silicon_vendor }} GPUs will throttle or thermal-trip within seconds. This module covers the electrical infrastructure required to drive Chillers, Pumps, Cooling Towers, and AI-specific Liquid Cooling components.
 
 ## 2. Engineering Philosophy: Cooling as a Critical Load
 For AI-ready designs, we categorize cooling loads into two tiers:
@@ -24,17 +24,17 @@ For AI-ready designs, we categorize cooling loads into two tiers:
 | **Chiller Starters** | Solid State Soft Starter or VFD | Reduces inrush current to 2x-3x $I_{flc}$ to prevent voltage dips. |
 | **Primary/Secondary Pumps** | Variable Frequency Drives (VFD) | Enables precise flow control and energy savings (affinity laws). |
 | **Cooling Tower Fans** | VFD with Bypass | Precise temperature control; bypass for emergency reliability. |
-| **Motor Efficiency** | IE4 (Super Premium Efficiency) | Mandatory to meet L&T's low PUE targets. |
+| **Motor Efficiency** | IE4 (Super Premium Efficiency) | Mandatory to meet L&T's low PUE targets (<{{ cookiecutter.target_pue }}). |
 
 ## 4. Engineering Calculations: Motor Sizing & Inrush
 
 ### 4.1 Starting Current and Voltage Dip
-When a 500 kW Chiller starts on a DG source, the voltage dip must be limited to <15%.
+When a large Chiller starts on a DG source, the voltage dip must be limited to <15%.
 *   **Formula:** $V_{dip} = \frac{I_{start}}{I_{sc\_bus}}$
 *   **Calculation:** If $I_{flc} = 800A$, and using a VFD ($2 \times I_{flc}$):
     *   $I_{start} = 1600A$.
-    *   If Bus Fault Level is 50kA: $V_{dip} = 1600 / 50,000 = 3.2\%$ (Acceptable).
-*   **Note:** If using Direct-on-Line (DOL), $I_{start}$ could be $6 \times 800 = 4800A$, causing a $>9\%$ dip.
+    *   If Bus Fault Level is {{ cookiecutter.fault_level_ka }}kA: $V_{dip} = 1600 / {{ (cookiecutter.fault_level_ka | float * 1000) | round(0) }} = {{ (1600 / (cookiecutter.fault_level_ka | float * 1000) * 100) | round(2) }}\%$ (Acceptable).
+*   **Note:** If using Direct-on-Line (DOL), $I_{start}$ could be $6 \times 800 = 4800A$, causing a massive dip.
 
 ### 4.2 VFD Heat Dissipation
 VFDs are typically 97-98% efficient.
@@ -44,7 +44,7 @@ VFDs are typically 97-98% efficient.
 *   **Action:** Ensure the Mechanical Room/MCC room has adequate ventilation to remove this heat.
 
 ## 5. AI-Ready Design Considerations
-1.  **VFD Harmonics (IEEE 519):** VFDs are non-linear loads. For the 40 MW plant, specify **6-pulse VFDs with Active Front End (AFE)** or **18-pulse VFDs** to ensure THDi remains $< 5\%$.
+1.  **VFD Harmonics (IEEE 519):** VFDs are non-linear loads. For the {{ cookiecutter.it_capacity_mw }} MW plant, specify **6-pulse VFDs with Active Front End (AFE)** or **18-pulse VFDs** to ensure THDi remains $< 5\%$.
 2.  **CDU Power Redundancy:** Every Coolant Distribution Unit must have **Dual Power Feeds** (Source A & Source B) with an internal or external ATS.
 3.  **Bearing Protection:** VFD-driven motors are susceptible to "Common Mode Voltage" causing bearing pitting. Specify **Insulated Bearings** or **Shaft Grounding Rings** for pumps $> 55 \text{ kW}$.
 4.  **Automatic Restart:** After a power transition (Utility to DG), VFDs must be programmed for "Auto-Restart" and "Flying Start" (catching a spinning motor) to minimize cooling downtime.
@@ -88,7 +88,7 @@ VFDs are typically 97-98% efficient.
 * **Siemens:** "Siriuns Motor Control Selection Guide."
 
 ### Revision History
-* 1.0: Initial HVAC Electrical Integration strategy for L&T Vyoma Mahape.
+* 1.0: Initial HVAC Electrical Integration strategy for {{ cookiecutter.project_name }} {{ cookiecutter.city }}.
 
 ---
-**Next File Recommendation:** `28_Liquid_Cooling/CDU_and_Pump_Electrical.md` (Focusing specifically on the Direct-to-Chip electrical requirements for NVIDIA Blackwell infrastructure).
+**Next File Recommendation:** `CDU_and_Pump_Electrical.md` (Focusing specifically on the Direct-to-Chip electrical requirements for {{ cookiecutter.ai_silicon_vendor }} infrastructure).
