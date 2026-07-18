@@ -1,10 +1,10 @@
 # Title: Master Electrical Engineering Formula Reference
-## Purpose: A centralized "Cheat Sheet" of every engineering formula required to design, validate, and troubleshoot a 40 MW AI-ready hyperscale facility.
+## Purpose: A centralized "Cheat Sheet" of every engineering formula required to design, validate, and troubleshoot a {{ cookiecutter.it_capacity_mw }} MW AI-ready hyperscale facility.
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #Calculations #ElectricalEngineering #Formulas #DataCentreDesign #LTVyoma #QuickReference
-## Related Files: [[AI_Load_Estimation.md]], [[Short_Circuit.md]], [[Voltage_Drop.md]], [[Earthing_Grid_Design.md]]
+## Tags: #Calculations #ElectricalEngineering #Formulas #DataCentreDesign #{{ cookiecutter.project_code }} #QuickReference
+## Related Files: [[AI_Load_Estimation.md]], [[Fault_Level_Calculations.md]], [[Sizing_and_Routing.md]], [[Grounding_Grid_Design.md]]
 ## Standards Covered: IEEE, IEC, IS, NFPA
 
 ---
@@ -18,8 +18,8 @@ Used for Transformers, Generators, and Main Distribution.
 *   **Reactive Power (Q):** $Q = \sqrt{3} \times V_L \times I_L \times \sin \phi$ (Unit: VAR)
 *   **Power Factor ($\cos \phi$):** $PF = \frac{P}{S}$
 
-### 1.2 DC Power (NVIDIA Rack Backplane)
-Used for 48V DC Busbars in AI Racks.
+### 1.2 DC Power ({{ cookiecutter.ai_silicon_vendor }} Rack Backplane)
+Used for 48V/54V DC Busbars in AI Racks.
 *   **Power (P):** $P = V \times I$ (Unit: Watts)
 *   **Current (I):** $I = \frac{P}{V}$ (Unit: Amperes)
 
@@ -113,8 +113,8 @@ For a 50kg human:
 
 ## 9. Design Checklist: Sanity Checks
 - [ ] **Check 1:** Is the Neutral current in the AI zone $< 1.73 \times$ Phase current? (If higher, check 3rd harmonic content).
-- [ ] **Check 2:** Is the Fault Level $< 65 \text{ kA}$? (If higher, switchgear costs will escalate exponentially).
-- [ ] **Check 3:** Is the Voltage Drop to the Rack $< 5\%$? (NVIDIA requires tight tolerances).
+- [ ] **Check 2:** Is the Fault Level $\leq {{ cookiecutter.fault_level_ka }} \text{ kA}$? (If higher, switchgear costs will escalate exponentially).
+- [ ] **Check 3:** Is the Voltage Drop to the Rack $< 5\%$? ({{ cookiecutter.ai_silicon_vendor }} requires tight tolerances).
 - [ ] **Check 4:** Does the DG Fuel storage support 48 hours at 100% Load?
 
 ---
@@ -126,7 +126,7 @@ For a 50kg human:
 * **IS 732:** Indian Standard for Wiring.
 
 ### Revision History
-* 1.0: Compiled Master Formulas for L&T Vyoma Mahape project.
+* 1.0: Compiled Master Formulas for {{ cookiecutter.project_name }} {{ cookiecutter.city }} project.
 
 ---
-**Next File Recommendation:** `41_Reference_Designs/Standard_Layouts.md` (Visualizing the physical architecture of the 40 MW plant).
+**Next File Recommendation:** `Standard_Layouts.md` (Visualizing the physical architecture of the {{ cookiecutter.it_capacity_mw }} MW plant).
