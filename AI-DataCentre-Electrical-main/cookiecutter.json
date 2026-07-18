@@ -1,0 +1,11 @@
+{
+    "project_name": "L&T AI Data Centre",
+    "project_slug": "{{ cookiecutter.project_name | lower | replace(' ', '-') | replace('&', 'n') }}",
+    "state": "Maharashtra",
+    "utility_provider": "MSEDCL",
+    "utility_voltage_kv": "33",
+    "it_capacity_mw": "10",
+    "target_pue": "1.35",
+    "ai_silicon_vendor": "NVIDIA",
+    "max_ambient_temp": "50"
+}
