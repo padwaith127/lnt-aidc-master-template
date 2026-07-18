@@ -3,30 +3,30 @@
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #EPMS #PowerQuality #PUE #EnergyAnalytics #Forensics #Metering #LTVyoma
-## Related Files: [[Supervisory_Control.md]], [[Power_Quality.md]], [[Harmonics_Mitigation.md]], [[BMS_Integration.md]]
+## Tags: #EPMS #PowerQuality #PUE #EnergyAnalytics #Forensics #Metering #{{ cookiecutter.project_code }}
+## Related Files: [[Supervisory_Control.md]], [[Transient_and_Sag_Analysis.md]], [[Mitigation_Strategies.md]], [[Building_Management_Integration.md]]
 ## Standards Covered: IEC 61000-4-30 Class A, IEC 62053-22 (Class 0.2S), IEEE 1159, ISO 50001, ASHRAE 90.4
 
 ---
 
 ## 1. Overview
-In a 40 MW AI facility, the **Electrical Power Monitoring System (EPMS)** is the "Digital Forensic Lab." While SCADA (Module 24) is built for speed and control, the EPMS is built for **depth and accuracy**. It captures millisecond-level disturbances (Sags, Swells, Transients) and provides the revenue-grade metering data required to calculate Power Usage Effectiveness (PUE) and bill internal or external tenants.
+In a {{ cookiecutter.it_capacity_mw }} MW AI facility, the **Electrical Power Monitoring System (EPMS)** is the "Digital Forensic Lab." While SCADA (Module 24) is built for speed and control, the EPMS is built for **depth and accuracy**. It captures millisecond-level disturbances (Sags, Swells, Transients) and provides the revenue-grade metering data required to calculate Power Usage Effectiveness (PUE) and bill internal or external tenants.
 
 ## 2. Design Philosophy: The AI Forensic Engine
-AI workloads (NVIDIA H100/B200) operate with extreme thermal and electrical dynamics.
+AI workloads ({{ cookiecutter.ai_silicon_vendor }}) operate with extreme thermal and electrical dynamics.
 1.  **High-Resolution Sampling:** Standard 1-second polling is blind to AI transients. EPMS must support **Waveform Capture** at 1024 samples/cycle.
-2.  **Event Chronology:** All meters must be synchronized to a GPS Master Clock via **PTP (Precision Time Protocol)** to ensure that a fault at the 33kV incoming can be time-aligned with a trip at the Rack PDU.
+2.  **Event Chronology:** All meters must be synchronized to a GPS Master Clock via **PTP (Precision Time Protocol)** to ensure that a fault at the {{ cookiecutter.utility_voltage_kv }}kV incoming can be time-aligned with a trip at the Rack PDU.
 3.  **Efficiency Granularity:** PUE must be measured at the Facility, Hall, and Row levels.
 
 ## 3. Metering Hierarchy & Selection
 
 | Location | Meter Class | Key Capability |
 | :--- | :--- | :--- |
-| **Utility Incomer (33kV)** | Class 0.2S (Revenue) | IEC 61000-4-30 Class A (PQ Compliance). |
+| **Utility Incomer ({{ cookiecutter.utility_voltage_kv }}kV)** | Class 0.2S (Revenue) | IEC 61000-4-30 Class A (PQ Compliance). |
 | **Main LT PCC Panels** | Class 0.5S | Harmonics to 63rd, Disturbance Direction Detection. |
 | **UPS Input/Output** | Class 0.5S | Efficiency monitoring, Phase Imbalance. |
 | **PDU / Busway Tap-offs** | Class 1.0 | kWh, kVA, Demand Current (Peak/Average). |
-| **Rack PDU (rPDU)** | Class 1.0 | Real-time Power (W) per NVIDIA Power Shelf. |
+| **Rack PDU (rPDU)** | Class 1.0 | Real-time Power (W) per {{ cookiecutter.ai_silicon_vendor }} Power Shelf. |
 
 ## 4. Engineering Calculations: Real-Time PUE
 
@@ -35,7 +35,7 @@ The EPMS is the primary tool for validating the facility's **Power Usage Effecti
 ### 4.1 PUE Formula
 $$PUE = \frac{\text{Total Facility Energy (kWh)}}{\text{IT Equipment Energy (kWh)}}$$
 
-*   **Total Facility Energy:** Measured at the 33kV Utility Incomer.
+*   **Total Facility Energy:** Measured at the {{ cookiecutter.utility_voltage_kv }}kV Utility Incomer.
 *   **IT Equipment Energy:** Measured at the output of the UPS or PDU feeds to the racks.
 
 ### 4.2 AI-Ready Calculation Adjustment
@@ -47,9 +47,9 @@ AI clusters draw significant power during "Idle" vs. "Compute." The EPMS must tr
 *   **Layer 3 (Software):** Database server with a "Sequence of Events" (SOE) recorder and automated reporting engine.
 
 ## 6. AI-Ready Technical Requirements
-1.  **Disturbance Direction Detection:** The EPMS must automatically determine if a voltage sag originated from the **MSEDCL Grid** or from an **Internal AI Load Step**.
-2.  **Harmonic Trend Analysis:** AI power supplies generate high 3rd and 5th harmonics. The EPMS must alert L&T operators if the **THDi** exceeds the transformer derating limit.
-3.  **Virtual Metering:** Creating "Logic-based" meters that sum up different blocks of the 40 MW facility for departmental billing (e.g., "AI Training Block A" vs "Cloud Compute Block B").
+1.  **Disturbance Direction Detection:** The EPMS must automatically determine if a voltage sag originated from the **{{ cookiecutter.utility_provider }} Grid** or from an **Internal AI Load Step**.
+2.  **Harmonic Trend Analysis:** AI power supplies generate high 3rd and 5th harmonics. The EPMS must alert operators if the **THDi** exceeds the transformer derating limit.
+3.  **Virtual Metering:** Creating "Logic-based" meters that sum up different blocks of the {{ cookiecutter.it_capacity_mw }} MW facility for departmental billing (e.g., "AI Training Block A" vs "Cloud Compute Block B").
 
 ## 7. Commissioning & Validation
 1.  **Meter Calibration Check:** Compare EPMS readings against a calibrated handheld Power Quality Analyzer (e.g., Fluke 435-II).
@@ -59,7 +59,7 @@ AI clusters draw significant power during "Idle" vs. "Compute." The EPMS must tr
 ## 8. Maintenance & Operations
 *   **Database Health:** Regular pruning of high-resolution waveform data to prevent storage bloat.
 *   **Firmware Updates:** Ensuring meters are patched against cybersecurity vulnerabilities (IEC 62443).
-*   **Report Automation:** Weekly automated emails to L&T Management showing PUE trends and Peak Demand utilization.
+*   **Report Automation:** Weekly automated emails to Management showing PUE trends and Peak Demand utilization.
 
 ## 9. Failure Modes
 *   **Data Gaps:** Occur when meters lack internal memory during a network switch failure. *Mitigation:* Specify meters with "Backfill" capability.
@@ -87,7 +87,7 @@ AI clusters draw significant power during "Idle" vs. "Compute." The EPMS must tr
 * **Eaton:** "The Importance of Sequence of Events Recording in Mission Critical Facilities."
 
 ### Revision History
-* 1.0: Initial EPMS Strategy for L&T Vyoma Mahape project.
+* 1.0: Initial EPMS Strategy for {{ cookiecutter.project_name }} {{ cookiecutter.city }} project.
 
 ---
-**Next File Recommendation:** `31_Commissioning/Level_1_to_Level_5_Testing.md` (Defining the rigorous testing phases required to prove the 40 MW plant is ready for NVIDIA hardware).
+**Next File Recommendation:** `Level_1_to_Level_5_Testing.md` (Defining the rigorous testing phases required to prove the {{ cookiecutter.it_capacity_mw }} MW plant is ready for AI hardware).
