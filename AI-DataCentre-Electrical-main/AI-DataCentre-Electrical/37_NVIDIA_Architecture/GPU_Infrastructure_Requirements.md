@@ -1,114 +1,64 @@
-# Title: NVIDIA GPU Infrastructure - Electrical Power Requirements
-## Purpose: To define the specific electrical infrastructure, power profiles, and deployment requirements for NVIDIA AI clusters (H100, B200, GB200).
-## Revision: 1.0
-## Date: 24-May-2024
-## Version: 1.0
-## Tags: #NVIDIA #H100 #Blackwell #GB200 #StepLoad #GPUInfrastructure #LTVyoma
-## Related Files: [[AI_Load_Estimation.md]], [[High_Density_Thermal_Management.md]], [[Rack_Level_Distribution.md]]
-## Standards Covered: NVIDIA Gold Site Survey Requirements, OCP ORV3, IEEE 1100, IEC 62368-1
+# Title: {{cookiecutter.ai_silicon_vendor}} GPU Infrastructure - Electrical Power Requirements
+## Purpose: To define the specific electrical infrastructure, power profiles, and deployment requirements for {{cookiecutter.ai_silicon_vendor}} AI clusters.
+## Project: {{cookiecutter.project_name}}
+## Tags: #{{cookiecutter.ai_silicon_vendor}} #StepLoad #GPUInfrastructure #AI-Ready #HighDensity
+## Standards Covered: OCP ORV3, IEEE 1100, IEC 62368-1
 
 ---
 
 ## 1. Overview
-In the L&T Mahape 40 MW project, the electrical design is purpose-built to host NVIDIA GPU infrastructure. Unlike standard CPU-based servers, NVIDIA AI clusters (specifically the Blackwell/GB200 architecture) exhibit extreme power density and highly dynamic load profiles. This module provides the technical "specs" for the electrical engineer to ensure the infrastructure is "NVIDIA-Certified."
+In the {{cookiecutter.project_name}}, the electrical design is purpose-built to host high-density {{cookiecutter.ai_silicon_vendor}} GPU infrastructure. Unlike standard CPU-based servers, AI clusters exhibit extreme power density and highly dynamic load profiles. This module provides the technical specs for the electrical engineer to ensure the infrastructure handles the thermal and electrical stress.
 
-## 2. NVIDIA Deployment Architectures
-
-| Architecture | Description | Typical Power per Rack | Cooling |
-| :--- | :--- | :--- | :--- |
-| **HGX / DGX H100** | Standard 8-GPU Baseboards. | 15 kW - 40 kW | Air or Liquid (D2C) |
-| **Blackwell HGX B200** | Next-gen high-performance cluster. | 60 kW - 100 kW | Liquid (Mandatory) |
-| **GB200 NVL72** | Liquid-cooled rack with 72 GPUs as one unit. | 120 kW+ | Liquid (D2C) |
-
-## 3. Power Step-Load & Transient Profiles
+## 2. Power Step-Load & Transient Profiles
 AI training is characterized by "Bursty" compute cycles.
-1.  **Training Initialization:** Power jumps from 10% to 80% in < 50ms.
+1.  **Training Initialization:** Power jumps from 10% to 100% in < 50ms.
 2.  **Checkpointing:** Sudden drop in power as data is written to disk.
-3.  **Communication Phase:** Fluctuating power draw as GPUs exchange data via NVLink.
+3.  **Communication Phase:** Fluctuating power draw as GPUs exchange data via high-speed interconnects.
 
-**L&T Engineering Mandate:** 
-The UPS and Generator systems must handle a **di/dt of >100A per millisecond** at the rack level without the voltage dropping below the ITIC lower bound (typically -10% of nominal).
+**Engineering Mandate:** 
+The UPS and Generator systems for the {{cookiecutter.it_capacity_mw}} MW facility must handle a **di/dt of >100A per millisecond** at the rack level without the voltage dropping below the ITIC/CBEMA lower bound.
 
-## 4. Engineering Calculations: TDP vs. Peak Power
+## 3. Engineering Calculations: TDP vs. Peak Power
+### 3.1 Thermal Design Power (TDP)
+TDP represents the continuous power draw. For modern {{cookiecutter.ai_silicon_vendor}} racks, this ranges from **60kW to 120kW+ per rack**.
 
-### 4.1 Thermal Design Power (TDP)
-TDP represents the continuous power draw.
-*   **H100 GPU:** ~700W per GPU.
-*   **B200 GPU:** ~1000W to 1200W per GPU.
+### 3.2 Peak Power Requirement
+Facility electrical circuits must be sized for the **Maximum Peak Power**, which includes the GPU, CPU, Networking, Fans, and internal Power Shelf losses.
+*   **Design Overhead:** Add a strict 10% to 15% overhead to the total Rack TDP to size the branch circuit breaker. 
+*   **Selection:** A 120kW rack requires a minimum 250A, 415V/480V 3-Phase feed via overhead busway.
 
-### 4.2 Peak Power Requirement
-NVIDIA recommends sizing electrical circuits for the **Maximum Peak Power**, which includes the GPU, CPU, Fans, and Power Shelf losses.
-*   **Formula:** $P_{total} = (N_{gpu} \times P_{gpu\_peak}) + (N_{cpu} \times P_{cpu}) + P_{fans} + P_{loss}$
-*   **Example (GB200 NVL72):**
-    *   72 GPUs @ 1200W = 86.4 kW.
-    *   Compute Tray CPUs + Networking = ~20 kW.
-    *   Liquid Cooling Pumps/Internal Fans = ~5 kW.
-    *   **Total Rack TDP:** ~111.4 kW.
-    *   **Design Overhead (10%):** ~122.5 kW.
-    *   **Selection:** 130 kVA Power Path.
+## 4. The 48V DC Ecosystem (OCP Standard)
+Next-generation {{cookiecutter.ai_silicon_vendor}} systems utilize the **Open Rack V3 (ORV3)** or similar power architectures.
+*   **Input:** 3-Phase AC into centralized rack-mounted Power Shelves.
+*   **Output:** 48V DC (to 54V DC) to the server backplane.
+*   **Why?** To handle the 2,500+ Amperes required for 120kW compute without melting internal cables. It utilizes a massive vertical copper busbar.
+*   **Grounding:** The DC return is referenced to the rack frame at a single point to prevent ground loops.
 
-## 5. The 48V DC Ecosystem
-NVIDIA Blackwell systems utilize the **OCP Open Rack V3 (ORV3)** power architecture.
-*   **Input:** 415V, 3-Phase AC into the Power Shelf.
-*   **Output:** 48V DC (nominal) to the server backplane.
-*   **Why?** To handle the 2,500A currents required for 120kW compute without melting cables.
-*   **Grounding:** The 48V DC return is typically referenced to the rack frame at a single point to prevent ground loops.
-
-## 6. AI-Ready Networking Power (The "Third Network")
-NVIDIA clusters require three distinct networks, each with its own power impact:
-1.  **Compute Fabric (InfiniBand/Spectrum-X):** High-speed interconnects between GPUs. High power draw at the switch level.
+## 5. AI-Ready Networking Power (The "Third Network")
+AI clusters require distinct networks, each with its own power impact:
+1.  **Compute Fabric:** High-speed interconnects between GPUs. High power draw at the switch level.
 2.  **Storage Fabric:** High-speed data feed.
-3.  **Management Network:** Low speed (SOP/EOP).
+3.  **Management Network:** Low speed operations.
 
-**L&T Strategy:** Ensure that "Networking Racks" (Switch Racks) are not under-sized. An InfiniBand switch rack for a large cluster can draw **20kW to 30kW** on its own.
+**Strategy:** Ensure that "Networking Switch Racks" are not under-sized. A core fabric switch rack for a large cluster can draw **20kW to 30kW** on its own.
 
-## 7. AI Site Survey Checklist (The NVIDIA Requirements)
-
-| Parameter | Requirement | L&T Mahape Implementation |
-| :--- | :--- | :--- |
-| **Voltage Tolerance** | +/- 5% Steady State | UPS Bypass & Rectifier Settings. |
-| **Frequency Tolerance** | +/- 0.5 Hz | DG Isochronous Governors. |
-| **THDv** | < 3% | Active Harmonic Filtering. |
-| **Neutral-to-Earth** | < 1.0 V | Dedicated Signal Reference Grid. |
-| **DC Busbar Ripple** | < 1% | High-capacitance Power Shelves. |
-
-## 8. Construction & Deployment (L&T Execution)
+## 6. Construction & Deployment Execution
 *   **Busway Tap-offs:** Use "Heavy Duty" tap-off boxes (250A/400A) with integrated energy metering.
-*   **Fiber Protection:** AI clusters involve thousands of fibers. Ensure electrical cable trays do not overlap or crush high-density fiber troughs (e.g., Panduit FiberRunner).
-*   **Weight Management:** Ensure the raised floor (if used) or concrete slab is reinforced for the **1.5 to 2.5 metric ton** weight of an NVIDIA NVL72 rack.
+*   **Fiber Protection:** AI clusters involve thousands of fibers. Ensure electrical power cable trays do NOT overlap or crush high-density fiber troughs. Maintain 600mm separation.
+*   **Weight Management:** Ensure the structural concrete slab is reinforced for the **1.5 to 2.5 metric ton** weight of a fully populated liquid-cooled AI rack.
 
-## 9. Commissioning & Readiness
-1.  **Load Step Simulation:** Use Load Banks that can trigger 0-100% steps to test the UPS and DG response.
-2.  **Harmonic Audit:** Confirm that the NVIDIA rectifiers are not creating resonance with the facility's power factor correction (PFC) banks.
-3.  **Redundancy Test:** Pull "Source A" and verify the Blackwell power shelf handles the load on "Source B" without any GPU performance throttling.
+## 7. Commissioning & Readiness (IST)
+1.  **Load Step Simulation:** Use specialized Load Banks that can trigger 0-100% steps to test the UPS and DG transient response.
+2.  **Harmonic Audit:** Confirm that the {{cookiecutter.ai_silicon_vendor}} rectifiers are not creating resonance with the facility's power factor correction banks.
+3.  **Redundancy Test:** Pull "Source A" and verify the power shelf handles the load on "Source B" without any GPU performance throttling.
 
-## 10. Failure Modes
+## 8. Failure Modes
 *   **Current Overloading:** During "Maximum Compute," a poorly balanced rack can trip one phase of a 3-phase input.
-*   **Transient Voltage Swell:** When an AI job finishes, the sudden 100kW load drop can cause a voltage swell that affects neighboring sensitive hardware.
-*   **Thermal Trip:** Failure of the CDU pump (Electrical issue) leads to GPU shutdown in < 15 seconds.
+*   **Transient Voltage Swell:** When an AI job finishes, the sudden 100kW load drop can cause a voltage swell that damages sensitive management hardware.
+*   **Thermal Trip:** Failure of the CDU liquid pump (electrical failure) leads to GPU shutdown in < 15 seconds.
 
----
-
-## 11. Design Checklist
-- [ ] Is the design capable of 120kW per rack?
+## 9. Design Checklist
+- [ ] Is the busway design capable of >120kW per rack?
 - [ ] Does the UPS handle a 100% load step within 1 cycle?
-- [ ] Is the Signal Reference Grid (SRG) connected to every NVIDIA rack?
-- [ ] Are the busway tap-offs rated for continuous operation at 50°C?
-- [ ] Has the InfiniBand networking switch power been accounted for?
-
----
-## 12. References
-### Standards
-* **NVIDIA DGX/HGX Site Preparation Guide:** (Proprietary/Partner Access).
-* **OCP Open Rack V3 (ORV3):** Power and Infrastructure Specifications.
-* **IEEE 1100:** Recommended Practice for Powering and Grounding (Emerald Book).
-
-### Research Papers
-* **NVIDIA White Paper:** "Accelerating AI with Blackwell Architecture."
-* **Uptime Institute:** "Infrastructure Requirements for High-Density AI Racks."
-
-### Revision History
-* 1.0: Initial NVIDIA Architecture spec for L&T Vyoma Mahape.
-
----
-**Next File Recommendation:** `38_Drawings/Standard_Drawing_Templates.md` (Defining how to create the SLDs, Layouts, and Protection drawings for the 40 MW facility).
+- [ ] Is the Signal Reference Grid (SRG) connected to every {{cookiecutter.ai_silicon_vendor}} rack to protect high-speed networking?
+- [ ] Are the AC input connectors (e.g., IEC 60309) specified with locking mechanisms?
