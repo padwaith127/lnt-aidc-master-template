@@ -1,16 +1,16 @@
 # Title: Liquid Cooling (CDU) & Secondary Loop Electrical Requirements
-## Purpose: To define the specialized electrical distribution and control requirements for Coolant Distribution Units (CDUs) and secondary cooling loops essential for NVIDIA AI infrastructure.
+## Purpose: To define the specialized electrical distribution and control requirements for Coolant Distribution Units (CDUs) and secondary cooling loops essential for {{ cookiecutter.ai_silicon_vendor }} AI infrastructure.
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #LiquidCooling #CDU #NVIDIA #Blackwell #SecondaryLoop #PumpControl #LTVyoma
-## Related Files: [[HVAC_Power_Integration.md]], [[BMS_Integration.md]], [[Rack_Power.md]], [[NVIDIA_Architecture.md]]
+## Tags: #LiquidCooling #CDU #{{ cookiecutter.ai_silicon_vendor }} #SecondaryLoop #PumpControl #{{ cookiecutter.project_code }}
+## Related Files: [[HVAC_Power_Integration.md]], [[Building_Management_Integration.md]], [[Rack_Level_Distribution.md]], [[GPU_Infrastructure_Requirements.md]]
 ## Standards Covered: ASHRAE TC 9.9 (2023), IEC 60364-7-706, NFPA 70, UL 62368-1
 
 ---
 
 ## 1. Overview
-In a 40 MW AI facility supporting NVIDIA Blackwell (GB200) or H100 clusters, air cooling is insufficient. The facility utilizes **Direct-to-Chip (D2C)** liquid cooling. The **Coolant Distribution Unit (CDU)** is the heartbeat of this system, acting as the heat exchanger between the Facility Water System (FWS) and the Technology Cooling System (TCS). Electrically, CDUs are "Critical Loads" that require the same level of availability as the IT racks themselves.
+In a {{ cookiecutter.it_capacity_mw }} MW AI facility supporting {{ cookiecutter.ai_silicon_vendor }} clusters, air cooling is insufficient. The facility utilizes **Direct-to-Chip (D2C)** liquid cooling. The **Coolant Distribution Unit (CDU)** is the heartbeat of this system, acting as the heat exchanger between the Facility Water System (FWS) and the Technology Cooling System (TCS). Electrically, CDUs are "Critical Loads" that require the same level of availability as the IT racks themselves.
 
 ## 2. Theory: The CDU Electrical Profile
 A CDU contains circulating pumps, a control system, and motorized valves. 
@@ -37,7 +37,7 @@ The electrical draw of a CDU is dominated by the pump motor required to move coo
 *   **Sizing:** Per NEC/CEA, size branch circuits at **125%** of the CDU's Maximum Continuous Rating (MCR).
 *   **Example:** A 40A rated CDU requires a 50A circuit breaker and corresponding 10 sq.mm copper cable.
 
-## 5. AI-Ready Design Requirements (NVIDIA Infrastructure)
+## 5. AI-Ready Design Requirements ({{ cookiecutter.ai_silicon_vendor }} Infrastructure)
 
 | Feature | Requirement | Implementation |
 | :--- | :--- | :--- |
@@ -49,12 +49,12 @@ The electrical draw of a CDU is dominated by the pump motor required to move coo
 ## 6. Construction & Layout (L&T Execution)
 *   **Placement:** In-row CDUs are placed within the IT row. Electrical feeds must come from the **Overhead Busway** or **Floor PDUs** dedicated to critical cooling.
 *   **Water-Electrical Separation:** Strictly maintain the "Drip-Zone" rule. Electrical conduits must never be located directly under mechanical pipe joints. 
-*   **Shielding:** Use shielded VFD cables to prevent the pump's switching frequency from interfering with the GPU's high-speed NVLink signals.
+*   **Shielding:** Use shielded VFD cables to prevent the pump's switching frequency from interfering with the GPU's high-speed interconnect signals.
 
 ## 7. Commissioning & Testing
 1.  **ATS Transfer Test:** Verify the CDU pumps continue to run during a "Source A to Source B" UPS transfer.
 2.  **Dry-Run Test:** Verify PLC logic and VFD ramp-up without fluid (if permitted by OEM).
-3.  **Telemetry Check:** Ensure the CDU "Flow Rate" and "Inlet Temp" are visible in the BMS and the NVIDIA Cluster Management software.
+3.  **Telemetry Check:** Ensure the CDU "Flow Rate" and "Inlet Temp" are visible in the BMS and the Cluster Management software.
 4.  **Pressure-Trip Test:** Verify the electrical shutdown of the pump if the secondary loop pressure exceeds the burst rating of the GPU manifolds.
 
 ## 8. Failure Modes
@@ -81,10 +81,10 @@ The electrical draw of a CDU is dominated by the pump motor required to move coo
 ### Manufacturer Documents
 * **Vertiv / Liebert:** "XDU Coolant Distribution Unit Technical Manual."
 * **Schneider Electric:** "In-Row Liquid Cooling Electrical Integration Guide."
-* **NVIDIA:** "Blackwell GB200 NVL72 Infrastructure Design Guide."
+* **Vendor Specs:** "{{ cookiecutter.ai_silicon_vendor }} Infrastructure Design Guide."
 
 ### Revision History
-* 1.0: Initial Liquid Cooling Electrical Strategy for L&T Vyoma Mahape.
+* 1.0: Initial Liquid Cooling Electrical Strategy for {{ cookiecutter.project_name }} {{ cookiecutter.city }}.
 
 ---
-**Next File Recommendation:** `29_Fire_Protection/Detection_and_Suppression.md` (Focusing on the electrical and control aspects of VESDA and Gas Suppression systems).
+**Next File Recommendation:** `Detection_and_Suppression.md` (Focusing on the electrical and control aspects of VESDA and Gas Suppression systems).
