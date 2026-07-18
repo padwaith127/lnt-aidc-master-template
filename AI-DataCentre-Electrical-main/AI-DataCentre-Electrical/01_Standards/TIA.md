@@ -3,25 +3,25 @@
 ## Revision: 1.0
 ## Date: 24-May-2024
 ## Version: 1.0
-## Tags: #TIA942 #Topology #DataCentreDesign #Infrastructure #Pathways #LTVyoma
+## Tags: #TIA942 #Topology #DataCentreDesign #Infrastructure #Pathways #{{ cookiecutter.project_code }}
 ## Related Files: [[Uptime.md]], [[Standard_Layouts.md]], [[Rack_Level_Distribution.md]]
 ## Standards Covered: TIA-942-C (2024), TIA-568, TIA-569, TIA-606
 
 ---
 
 ## 1. Overview
-The **TIA-942** (Telecommunications Industry Association) standard is the comprehensive architectural and electrical "blueprint" for data centres. While Uptime focuses on *outcomes* (Availability), TIA-942 focuses on *inputs* (How to build it). For the L&T Mahape project, the latest **TIA-942-C (2024)** edition governs the physical structure of the 40 MW plant.
+The **TIA-942** (Telecommunications Industry Association) standard is the comprehensive architectural and electrical "blueprint" for data centres. While Uptime focuses on *outcomes* (Availability), TIA-942 focuses on *inputs* (How to build it). For the {{ cookiecutter.project_name }} {{ cookiecutter.city }} project, the latest **TIA-942-C (2024)** edition governs the physical structure of the {{ cookiecutter.it_capacity_mw }} MW plant.
 
 ## 2. Infrastructure Rating Levels (Rated 1-4)
 TIA-942 uses "Rated" levels (similar to Uptime Tiers):
-*   **Rated 3 (Concurrently Maintainable):** No shutdown required for any component maintenance. This is the L&T Mahape target.
+*   **Rated 3 (Concurrently Maintainable):** No shutdown required for any component maintenance. This is the {{ cookiecutter.project_name }} target.
 *   **Rated 4 (Fault Tolerant):** Redundant systems that can handle a "Single Point of Failure" without impacting the load.
 
 ## 3. Key Electrical & Telecommunication Requirements
 
 ### 3.1 Pathways and Spaces
 *   **Redundancy:** Dual cable entry rooms (EF - Entrance Facilities) on opposite sides of the building.
-*   **Separation:** Mandatory physical separation between Power and Data pathways (minimum 600mm) to avoid EMI on InfiniBand AI links.
+*   **Separation:** Mandatory physical separation between Power and Data pathways (minimum 600mm) to avoid EMI on high-speed AI links.
 
 ### 3.2 Racks and Cabinets
 *   **Clearance:** Minimum 1.2m (4 ft) in front of cabinets and 0.9m (3 ft) at the rear. 
@@ -58,4 +58,4 @@ The 2024 edition of TIA-942 specifically addresses high-density needs:
 * **TIA-606:** Administration Standard for Infrastructure.
 
 ### Revision History
-* 1.0: Mapped TIA-942 requirements for L&T Vyoma Mahape project.
+* 1.0: Mapped TIA-942 requirements for {{ cookiecutter.project_name }} {{ cookiecutter.city }} project.
